@@ -1,0 +1,1 @@
+docker-compose -f /Users/lavinaagrawal/TechProjects/dockerValidation/docker-compose.yaml down

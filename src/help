@@ -1,0 +1,82 @@
+
+Docker commands
+
+To check if any containers are running
+docker ps
+
+To pull any new image in the docker
+docker pull selenium/standalone-chrome:latest
+
+To check what all images downloaded give foll cmd
+docker images
+
+To start a new container
+
+
+Command to deploy an image in container
+docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome:latest
+
+Again check if containers are running
+Docker ps
+
+To pull another image and run in another container
+
+To pull a firefox image -
+docker pull selenium/standalone-firefox:latest
+
+Deploying the image into new container
+docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-firefox:latest
+
+To stop a port from running
+Docker stop containerid
+
+To view all container
+Docker ps -a
+
+To remove container from docker
+Docker rm containerid
+
+Docker port mapping
+
+docker run -d -p 4445:4444 --shm-size="2g" selenium/standalone-firefox:latest
+In above command 4445 is local m/c port and 4444 is docker container port.Multiple tests can run on same docker port number.
+
+
+to run selenium grid using docker go to official documention
+https://github.com/SeleniumHQ/docker-selenium/tree/selenium-3
+
+create docker-compose.yaml file and copy paste the contents in that file
+# To execute this docker-compose yml file use `docker-compose -f <file_name> up`
+# Add the `-d` flag at the end for detached execution
+version: '2'
+services:
+  chrome:
+    image: selenium/node-chrome:3.141.59-20210804
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
+
+  firefox:
+    image: selenium/node-firefox:3.141.59-20210804
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
+
+
+      Got to the path where the file is saved and give command -
+      docker-compose -f <file_name> up
+
+      now check - http://localhost:4444/grid/console -The Hub and nodes must be registered
+
+      If you want to add more chrome browsers give cmd
+      docker-compose up --scale chrome=5
+
+
+
+
